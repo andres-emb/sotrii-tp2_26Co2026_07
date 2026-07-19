@@ -14,6 +14,7 @@ C_SRCS += \
 ../app/src/task_b.c \
 ../app/src/task_btn.c \
 ../app/src/task_led.c \
+../app/src/task_led_interface.c \
 ../app/src/task_sys.c 
 
 OBJS += \
@@ -26,6 +27,7 @@ OBJS += \
 ./app/src/task_b.o \
 ./app/src/task_btn.o \
 ./app/src/task_led.o \
+./app/src/task_led_interface.o \
 ./app/src/task_sys.o 
 
 C_DEPS += \
@@ -38,6 +40,7 @@ C_DEPS += \
 ./app/src/task_b.d \
 ./app/src/task_btn.d \
 ./app/src/task_led.d \
+./app/src/task_led_interface.d \
 ./app/src/task_sys.d 
 
 
@@ -48,7 +51,7 @@ app/src/%.o app/src/%.su app/src/%.cyclo: ../app/src/%.c app/src/subdir.mk
 clean: clean-app-2f-src
 
 clean-app-2f-src:
-	-$(RM) ./app/src/app.cyclo ./app/src/app.d ./app/src/app.o ./app/src/app.su ./app/src/app_it.cyclo ./app/src/app_it.d ./app/src/app_it.o ./app/src/app_it.su ./app/src/freertos.cyclo ./app/src/freertos.d ./app/src/freertos.o ./app/src/freertos.su ./app/src/logger.cyclo ./app/src/logger.d ./app/src/logger.o ./app/src/logger.su ./app/src/systick.cyclo ./app/src/systick.d ./app/src/systick.o ./app/src/systick.su ./app/src/task_a.cyclo ./app/src/task_a.d ./app/src/task_a.o ./app/src/task_a.su ./app/src/task_b.cyclo ./app/src/task_b.d ./app/src/task_b.o ./app/src/task_b.su ./app/src/task_btn.cyclo ./app/src/task_btn.d ./app/src/task_btn.o ./app/src/task_btn.su ./app/src/task_led.cyclo ./app/src/task_led.d ./app/src/task_led.o ./app/src/task_led.su ./app/src/task_sys.cyclo ./app/src/task_sys.d ./app/src/task_sys.o ./app/src/task_sys.su
+	-$(RM) ./app/src/app.cyclo ./app/src/app.d ./app/src/app.o ./app/src/app.su ./app/src/app_it.cyclo ./app/src/app_it.d ./app/src/app_it.o ./app/src/app_it.su ./app/src/freertos.cyclo ./app/src/freertos.d ./app/src/freertos.o ./app/src/freertos.su ./app/src/logger.cyclo ./app/src/logger.d ./app/src/logger.o ./app/src/logger.su ./app/src/systick.cyclo ./app/src/systick.d ./app/src/systick.o ./app/src/systick.su ./app/src/task_a.cyclo ./app/src/task_a.d ./app/src/task_a.o ./app/src/task_a.su ./app/src/task_b.cyclo ./app/src/task_b.d ./app/src/task_b.o ./app/src/task_b.su ./app/src/task_btn.cyclo ./app/src/task_btn.d ./app/src/task_btn.o ./app/src/task_btn.su ./app/src/task_led.cyclo ./app/src/task_led.d ./app/src/task_led.o ./app/src/task_led.su ./app/src/task_led_interface.cyclo ./app/src/task_led_interface.d ./app/src/task_led_interface.o ./app/src/task_led_interface.su ./app/src/task_sys.cyclo ./app/src/task_sys.d ./app/src/task_sys.o ./app/src/task_sys.su
 
 .PHONY: clean-app-2f-src
 

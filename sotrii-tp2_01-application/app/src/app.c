@@ -54,6 +54,7 @@
 #include "task_sys_attribute.h"
 #include "task_sys.h"
 #include "task_led_attribute.h"
+#include "task_led_interface.h"
 #include "task_led.h"
 
 /********************** macros and definitions *******************************/
@@ -94,7 +95,6 @@ TaskHandle_t h_task_a;
 TaskHandle_t h_task_b;
 TaskHandle_t h_task_btn;
 TaskHandle_t h_task_sys;
-TaskHandle_t h_task_led;
 
 /********************** external functions definition ************************/
 void app_init(void)
@@ -123,10 +123,6 @@ void app_init(void)
 	configASSERT(NULL != h_sys_task_q);
 	vQueueAddToRegistry(h_sys_task_q, "Queue BTN-> SYS");
 
-	h_led_task_q = xQueueCreate(QUEUE_LENGTH__, QUEUE_ITEM_SIZE__);
-	configASSERT(NULL != h_led_task_q);
-	vQueueAddToRegistry(h_led_task_q, "Queue SYS-> LED");
-
 	/* The semaphore is created in the 'empty' state, meaning the semaphore
 	 * must first be given using the xSemaphoreGive() API function before it can
 	 * subsequently be taken (obtained) using the xSemaphoreTake() function */
@@ -152,17 +148,6 @@ void app_init(void)
 					  NULL,								/* We are not using the task parameter. */
 					  (tskIDLE_PRIORITY + 2ul),			/* This task will run at priority 1. */
 					  &h_task_b);						/* We are using a variable as task handle. */
-
-    /* Check the thread was created successfully. */
-    configASSERT(pdPASS == ret);
-
-    /* Task LED thread at priority 1 */
-	ret = xTaskCreate(task_led,							/* Pointer to the function thats implement the task. */
-					  "Task Led     ",					/* Text name for the task. This is to facilitate debugging only. */
-					  (configMINIMAL_STACK_SIZE),		/* Stack depth in words. */
-					  (void *)&h_led,					/* We are using the task parameter. */
-					  (tskIDLE_PRIORITY + 1ul),			/* This task will run at priority 1. */
-					  &h_task_led);						/* We are using a variable as task handle. */
 
     /* Check the thread was created successfully. */
     configASSERT(pdPASS == ret);
@@ -198,6 +183,9 @@ void app_init(void)
     /* There is no dedicated list for task in Running mode (as we have only
      * one task in this state at the moment), but the currently run task ID
      * is stored in variable pxCurrentTCB */
+
+    /* Active Objects Open */
+    open_led_ao(&h_led[LED_A]);
 
     /* Application Interrupts Init */
 	app_it_init();

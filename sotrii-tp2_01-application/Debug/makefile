@@ -39,34 +39,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := sotrii-tp2_01-application-au
+BUILD_ARTIFACT_NAME := sotrii-tp2_01-application
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-sotrii-tp2_01-application-au.elf \
+sotrii-tp2_01-application.elf \
 
 MAP_FILES += \
-sotrii-tp2_01-application-au.map \
+sotrii-tp2_01-application.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-sotrii-tp2_01-application-au.list \
+sotrii-tp2_01-application.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: sotrii-tp2_01-application-au.elf secondary-outputs
+main-build: sotrii-tp2_01-application.elf secondary-outputs
 
 # Tool invocations
-sotrii-tp2_01-application-au.elf sotrii-tp2_01-application-au.map: $(OBJS) $(USER_OBJS) /home/zoa/cese/rtos2/tp2/sotrii-tp2_01-application-au/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "sotrii-tp2_01-application-au.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/zoa/cese/rtos2/tp2/sotrii-tp2_01-application-au/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="sotrii-tp2_01-application-au.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+sotrii-tp2_01-application.elf sotrii-tp2_01-application.map: $(OBJS) $(USER_OBJS) /home/zoa/cese/rtos2/tp2/sotrii-tp2_01-application/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "sotrii-tp2_01-application.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/zoa/cese/rtos2/tp2/sotrii-tp2_01-application/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="sotrii-tp2_01-application.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -75,14 +75,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sotrii-tp2_01-application-au.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "sotrii-tp2_01-application-au.list"
+sotrii-tp2_01-application.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "sotrii-tp2_01-application.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout sotrii-tp2_01-application-au.elf sotrii-tp2_01-application-au.list sotrii-tp2_01-application-au.map
+	-$(RM) default.size.stdout sotrii-tp2_01-application.elf sotrii-tp2_01-application.list sotrii-tp2_01-application.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

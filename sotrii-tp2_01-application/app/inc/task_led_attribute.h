@@ -81,11 +81,23 @@ typedef struct
 	TickType_t		tick;
 } led_sc_t;
 
+#define QUEUE_TXT_LEN	16ul
+#define TASK_TXT_LEN	16ul
+
+typedef struct
+{
+	QueueHandle_t h_queue;
+	char queue_txt[QUEUE_TXT_LEN];
+	TaskHandle_t h_task;
+	char task_txt[TASK_TXT_LEN];
+} led_ao_t;
+
 /* Structure of Task */
 typedef struct
 {
-	led_t *		led;
-	led_sc_t *	led_sc;
+	led_t *	led;
+	led_sc_t * led_sc;
+	led_ao_t * led_ao;
 } h_led_t;
 
 /********************** external data declaration ****************************/

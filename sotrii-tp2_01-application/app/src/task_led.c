@@ -47,6 +47,7 @@
 #include "board.h"
 #include "app.h"
 #include "task_led_attribute.h"
+#include "task_led_interface.h"
 
 /********************** macros and definitions *******************************/
 #define G_TASK_LED_CNT_INI	0ul
@@ -66,6 +67,10 @@ led_sc_t led_sc[LED_QTY] = {{ST_LED_OFF, EV_LED_NONE, ZERO},
 							{ST_LED_OFF, EV_LED_NONE, ZERO},
 							{ST_LED_OFF, EV_LED_NONE, ZERO}};
 
+led_ao_t led_ao[LED_QTY] = {{NULL, "Queue LED_A AO", NULL, "Task LED_A AO"},
+					 		{NULL, "Queue LED_B AO", NULL, "Task LED_B AO"},
+					 		{NULL, "Queue LED_C AO", NULL, "Task LED_C AO"}};
+
 /********************** internal functions declaration ***********************/
 void task_led_statechart(h_led_t *h_led_);
 
@@ -74,9 +79,9 @@ void task_led_statechart(h_led_t *h_led_);
 /********************** external data declaration ****************************/
 uint32_t g_task_led_cnt;
 
-h_led_t h_led[LED_QTY] = {{&led[LED_A], &led_sc[LED_A]},
-				    	  {&led[LED_B], &led_sc[LED_B]},
-						  {&led[LED_C], &led_sc[LED_C]}};
+h_led_t h_led[LED_QTY] = {{&led[LED_A], &led_sc[LED_A], &led_ao[LED_A]},
+				    	  {&led[LED_B], &led_sc[LED_B], &led_ao[LED_B]},
+						  {&led[LED_C], &led_sc[LED_C], &led_ao[LED_C]}};
 
 /********************** external functions definition ************************/
 /* Task thread */
@@ -97,7 +102,7 @@ void task_led(void *parameters)
 		g_task_led_cnt++;
 
 		/* Get Events to excite Statechart */
-		if (pdFAIL == xQueueReceive(h_led_task_q, (void *)&p_h_led->led_sc->ev_in, (TickType_t)ZERO))
+		if (pdFAIL == xQueueReceive(p_h_led->led_ao->h_queue, (void *)&p_h_led->led_sc->ev_in, (TickType_t)ZERO))
 		{
 			p_h_led->led_sc->ev_in = EV_LED_NONE;
 		}

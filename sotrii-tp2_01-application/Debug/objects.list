@@ -45,4 +45,5 @@
 "./app/src/task_b.o"
 "./app/src/task_btn.o"
 "./app/src/task_led.o"
+"./app/src/task_led_interface.o"
 "./app/src/task_sys.o"
