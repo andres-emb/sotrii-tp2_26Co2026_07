@@ -127,30 +127,30 @@ void task_led_statechart(h_led_t *h_led_)
 				case EV_LED_OFF:
 
 					h_led_->led_sc->state = ST_LED_OFF;
-					h_led->led->pin_state = LED_OFF;
+					h_led_->led->pin_state = LED_OFF;
 					h_led_->led_sc->tick = ZERO;
 
-					HAL_GPIO_WritePin(h_led->led->gpio_port, h_led->led->pin, h_led->led->pin_state);
+					HAL_GPIO_WritePin(h_led_->led->gpio_port, h_led_->led->pin, h_led_->led->pin_state);
 
 					break;
 
 				case EV_LED_ON:
 
 					h_led_->led_sc->state = ST_LED_ON;
-					h_led->led->pin_state = LED_ON;
+					h_led_->led->pin_state = LED_ON;
 					h_led_->led_sc->tick = ZERO;
 
-					HAL_GPIO_WritePin(h_led->led->gpio_port, h_led->led->pin, h_led->led->pin_state);
+					HAL_GPIO_WritePin(h_led_->led->gpio_port, h_led_->led->pin, h_led_->led->pin_state);
 
 					break;
 
 				case EV_LED_BLINK:
 
 					h_led_->led_sc->state = ST_LED_BLINK;
-					h_led->led->pin_state = HAL_GPIO_ReadPin(h_led->led->gpio_port, h_led->led->pin);
+					h_led_->led->pin_state = HAL_GPIO_ReadPin(h_led_->led->gpio_port, h_led_->led->pin);
 					h_led_->led_sc->tick = DEL_LED_BLINK;
 
-					HAL_GPIO_TogglePin(h_led->led->gpio_port, h_led->led->pin);
+					HAL_GPIO_TogglePin(h_led_->led->gpio_port, h_led_->led->pin);
 
 					break;
 
@@ -168,20 +168,20 @@ void task_led_statechart(h_led_t *h_led_)
 				case EV_LED_OFF:
 
 					h_led_->led_sc->state = ST_LED_OFF;
-					h_led->led->pin_state = LED_OFF;
+					h_led_->led->pin_state = LED_OFF;
 					h_led_->led_sc->tick = ZERO;
 
-					HAL_GPIO_WritePin(h_led->led->gpio_port, h_led->led->pin, h_led->led->pin_state);
+					HAL_GPIO_WritePin(h_led_->led->gpio_port, h_led_->led->pin, h_led_->led->pin_state);
 
 					break;
 
 				case EV_LED_ON:
 
 					h_led_->led_sc->state = ST_LED_ON;
-					h_led->led->pin_state = LED_ON;
+					h_led_->led->pin_state = LED_ON;
 					h_led_->led_sc->tick = ZERO;
 
-					HAL_GPIO_WritePin(h_led->led->gpio_port, h_led->led->pin, h_led->led->pin_state);
+					HAL_GPIO_WritePin(h_led_->led->gpio_port, h_led_->led->pin, h_led_->led->pin_state);
 
 					break;
 
@@ -193,10 +193,10 @@ void task_led_statechart(h_led_t *h_led_)
 
 					if (ZERO == h_led_->led_sc->tick)
 					{
-						h_led->led->pin_state = HAL_GPIO_ReadPin(h_led->led->gpio_port, h_led->led->pin);
+						h_led_->led->pin_state = HAL_GPIO_ReadPin(h_led_->led->gpio_port, h_led_->led->pin);
 						h_led_->led_sc->tick = DEL_LED_BLINK;
 
-						HAL_GPIO_TogglePin(h_led->led->gpio_port, h_led->led->pin);
+						HAL_GPIO_TogglePin(h_led_->led->gpio_port, h_led_->led->pin);
 					}
 
 					break;

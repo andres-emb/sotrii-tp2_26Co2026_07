@@ -80,7 +80,7 @@ void task_btn_statechart(h_btn_t *h_btn_);
 uint32_t g_task_btn_cnt;
 
 h_btn_t	h_btn[BTN_QTY] = {{&btn[BTN_A], &btn_sc[BTN_A], &btn_ao[BTN_A]},
-						  {&btn[BTN_B], &btn_sc[BTN_B], &btn_ao[BTN_A]}};
+						  {&btn[BTN_B], &btn_sc[BTN_B], &btn_ao[BTN_B]}};
 
 /********************** external functions definition ************************/
 /* Task thread */
