@@ -34,5 +34,17 @@ En `task_sys` se manejan 3 estados, el primero `INIT` se encarga de llevar al si
 
 Si llegan nuevos eventos en el estado `ACTIVE` son ignorados hasta terminar la ejecución del active object actual, lo cual ocurre al volver al estado `INIT`.
 
+### WCET — medicion y registro
+
+Medicion con DWT, STM32CubeIDE Live Expressions:
+
+| Medicion | Variable | WCET [us] |
+|----------|----------|-----------|
+| Send event to LED | `g_task_send_led_ao_runtime_us` | 2 - 4 |
+| Send event to SYS | `g_task_send_sys_ao_runtime_us` | 3 |
+
+
+### Video del tp funcionando
+[Video / archivo en Drive](https://drive.google.com/file/d/1QX4XySN6ypw3yK2sAof4tUiLwWRKkSZm/view?usp=drive_link)
 
 ---
