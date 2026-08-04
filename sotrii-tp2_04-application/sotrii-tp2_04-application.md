@@ -44,7 +44,7 @@ Medicion con DWT, STM32CubeIDE Live Expressions:
 | Send event to SYS | `g_task_send_sys_ao_runtime_us` | 3 |
 
 
-### Video del tp funcionando
-[Video / archivo en Drive](https://drive.google.com/file/d/1QX4XySN6ypw3yK2sAof4tUiLwWRKkSZm/view?usp=drive_link)
+### Videos del tp funcionando
+[Video / archivo en Drive](https://drive.google.com/drive/folders/1c5V5dFhL71jzMTvFuzbEzeV2ZKetn-SP?usp=sharing)
 
 ---
