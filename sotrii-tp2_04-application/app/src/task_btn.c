@@ -60,6 +60,7 @@
 #define TASK_BTN_DEL_ZERO	(pdMS_TO_TICKS(0ul))
 #define TASK_BTN_DEL_MAX	DEL_BTN_MIN
 
+#define G_TASK_SEND_SYS_AO_RUNTIME_US_INI	0ul
 /********************** internal data declaration ****************************/
 btn_t btn[BTN_QTY] = {{BTN_A, BTN_A_PORT, BTN_A_PIN, BTN_A_HOVER},
 					  {BTN_B, BTN_B_PORT, BTN_B_PIN, BTN_B_HOVER}};
@@ -82,12 +83,14 @@ uint32_t g_task_btn_cnt;
 h_btn_t	h_btn[BTN_QTY] = {{&btn[BTN_A], &btn_sc[BTN_A], &btn_ao[BTN_A]},
 						  {&btn[BTN_B], &btn_sc[BTN_B], &btn_ao[BTN_B]}};
 
+uint32_t g_task_send_sys_ao_runtime_us;
 /********************** external functions definition ************************/
 /* Task thread */
 void task_btn(void *parameters)
 {
 	/*  Declare & Initialize Task Function variables */
 	g_task_btn_cnt = G_TASK_BTN_CNT_INI;
+	g_task_send_sys_ao_runtime_us = G_TASK_SEND_SYS_AO_RUNTIME_US_INI;
 	h_btn_t *p_h_btn = (h_btn_t *)parameters;
 
 	/* Print out: Task Initialized */
@@ -135,8 +138,10 @@ void task_btn_statechart(h_btn_t *h_btn_)
 				h_btn_->btn_sc->tick_out = h_btn_->btn_sc->tick;
 				h_btn_->btn_sc->tick = ZERO;
 
-				// xQueueSend(h_sys_task_q, (void *)&h_btn_->btn_sc->ev_out, (TickType_t)ZERO);
+				/* Measure the WCT of send_sys_ao which is the interface of the system active object */
+				cycle_counter_init();
 				send_sys_ao(&h_sys, (void*)&h_btn_->btn_sc->ev_out);
+				g_task_send_sys_ao_runtime_us = cycle_counter_get_time_us();
 			}
 			else
 			{

@@ -63,6 +63,7 @@
 
 #define BTN_OP_TIME_THRESHOLD (pdMS_TO_TICKS(2000ul))
 
+#define G_TASK_SEND_LED_AO_RUNTIME_US_INI	0ul
 /********************** internal data declaration ****************************/
 sys_sc_t sys_sc = {ST_SYS_INIT, {EV_SYS_OFF, ZERO}, ZERO, EV_SYS_NONE, ZERO, ZERO};
 sys_ao_t sys_ao = {NULL, "Queue SYS AO", NULL, "Task SYS AO"};
@@ -74,6 +75,7 @@ void task_sys_statechart(h_sys_t *h_sys_);
 static btn_id_t btn_active = -1;
 /********************** external data declaration ****************************/
 uint32_t g_task_sys_cnt;
+uint32_t g_task_send_led_ao_runtime_us;
 
 h_sys_t h_sys = {&sys_sc, &sys_ao};
 
@@ -88,6 +90,7 @@ void task_sys(void *parameters)
 {
 	/*  Declare & Initialize Task Function variables */
 	g_task_sys_cnt = G_TASK_SYS_CNT_INI;
+	g_task_send_led_ao_runtime_us = G_TASK_SEND_LED_AO_RUNTIME_US_INI;
 	h_sys_t *p_h_sys = (h_sys_t *)parameters;
 
 	/* Print out: Task Initialized */
@@ -121,7 +124,11 @@ void task_sys_statechart(h_sys_t *h_sys_)
 		case ST_SYS_INIT:
 			h_sys_->sys_sc->ev_out = EV_SYS_ON;
 
+			/* Measure the WCT of send_led_ao which is the interface of the led active object*/
+			cycle_counter_init();
 			send_led_ao(&h_led[LED_A], (void *)&h_sys_->sys_sc->ev_out);
+			g_task_send_led_ao_runtime_us = cycle_counter_get_time_us();
+
 			send_led_ao(&h_led[LED_B], (void *)&h_sys_->sys_sc->ev_out);
 
 			h_sys_->sys_sc->ev_out = EV_SYS_OFF;
@@ -156,14 +163,8 @@ void task_sys_statechart(h_sys_t *h_sys_)
 
 		case ST_SYS_ACTIVE:
 			if (h_sys_->sys_sc->tick > btn_op_time[btn_active]) {
-				h_sys_->sys_sc->state = ST_SYS_IDLE;
+				h_sys_->sys_sc->state = ST_SYS_INIT;
 				h_sys_->sys_sc->tick = ZERO;
-
-				h_sys_->sys_sc->ev_out = EV_SYS_ON;
-				send_led_ao(&h_led[btn_active], (void *)&h_sys_->sys_sc->ev_out);
-
-				h_sys_->sys_sc->ev_out = EV_SYS_OFF;
-				send_led_ao(&h_led[LED_C], (void *)&h_sys_->sys_sc->ev_out);
 			} else {
 				h_sys_->sys_sc->tick += DEL_SYS_MIN;
 			}
